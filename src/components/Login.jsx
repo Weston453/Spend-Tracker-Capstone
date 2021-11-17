@@ -23,20 +23,18 @@ const Login = () => {
         const auth = getAuth()
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                    console.log(navigate)
                 localStorage.setItem('token', userCredential._tokenResponse.idToken)
                 navigate('/dashboard')
-                    console.log('hello line 26')
             })
             .catch(e => alert(e.message))
             .finally(() => setLoading(false))
     }
-    // console.log(getAuth().currentUser)
+    console.log(getAuth().currentUser)
 
     return (
         <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">
             {/* <h1>Spend Tracker</h1> */}
-            <div className="w-96 bg-white shadow-lg mx-5">
+            <div className="w-96 bg-white rounded shadow-lg mx-5">
                 <div className="m-5">
                     <h2 className="block text-xl font-bold mb-2">Login</h2>
                 </div>
@@ -69,6 +67,9 @@ const Login = () => {
                 </div>
                 <div className="m-5">
                     Need an Account? <Link to="/signup"><u>Sign Up</u></Link>
+                </div>
+                <div className="m-5">
+                    Forgot Password? <Link to="/ForgotPassword"><u>Reset Now</u></Link>
                 </div>
             </div>
         </div>

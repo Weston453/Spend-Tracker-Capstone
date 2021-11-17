@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getAuth, signOut } from 'firebase/auth'
+import UpdateProfileModal from './UpdateProfileModal'
+import cog from '../cog.png'
 
-const Dashboard = ({history}) => {
+const Dashboard = () => {
+    const [ modal, setModal ] = useState(false)
     const navigate = useNavigate()
 
     const logout = () => {
@@ -26,19 +29,22 @@ const Dashboard = ({history}) => {
     const user = auth.currentUser
 
     return (
-        <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">
-        <div className="w-96 bg-white shadow-lg m-5">
-            <div className="m-5">
-                <p>{user && user.displayName}</p>
-            </div>
-            <div className="m-5">
+        <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex">
+        {modal && <UpdateProfileModal modal={modal} setModal={setModal}/>}
+        <div>
+            <div className="m-5 text-white font-bold">
                 <button 
                     onClick={logout}
-                    className="bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 text-white px-10 py-2 rounded text-xl font-bold"
                 >
-                    Logout
+                    <u>Logout</u>
+                </button>
+                <button onClick={() => {setModal(true)}}>
+                    <img className="h-10" src={cog} alt="settings" />
                 </button>
             </div>
+        <div className="m-5 text-white font-bold text-xl">
+                <p>{user && user.displayName}</p>
+        </div>
         </div>
     </div>
     )

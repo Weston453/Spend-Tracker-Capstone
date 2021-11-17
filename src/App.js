@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { onAuthStateChanged, getAuth } from '@firebase/auth';
+import ForgotPassword from './components/ForgotPassword';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBVrO6EYEWNlLKpu0WLgaCXqj8h-RJ6uIM",
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
         </Routes>
       </BrowserRouter>
     </div>

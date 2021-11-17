@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -10,8 +10,7 @@ const Signup = ({ history }) => {
     const [ password, setPassword ] = useState("")
     const [ confirmPassword, setConfirmPassword ] = useState("")
     const [ loading, setLoading ] = useState(false)
-    const passwordRef = useRef()
-    const passwordConfirmRef = useRef()
+    const [ error, setError ] = useState(false)
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -21,9 +20,13 @@ const Signup = ({ history }) => {
         }
     })
 
-    const onSignup = () => {
+    const submitHandler = () => {
         setLoading(true)
         const auth = getAuth()
+
+        if (password !== confirmPassword){
+            setError(true)
+        }
 
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
@@ -34,17 +37,9 @@ const Signup = ({ history }) => {
             .finally(() => setLoading(false))
     }
 
-    // if (password !== confirmPassword){
-    //     return alert('Passwords do not match')
-    // }
-
-    // if (passwordRef.current !== passwordConfirmRef.current){
-    //     return console.log('Passwords do not match')
-    // }
-
     return (
-        <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">
-            <div className="w-96 bg-white shadow-lg m-5">
+        <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center p-5px">
+            <div className="w-96 bg-white rounded shadow-lg m-5">
                 <div className="m-5">
                     <h2 className="block text-xl font-bold mb-2">Create Account</h2>
                 </div>
@@ -77,7 +72,6 @@ const Signup = ({ history }) => {
                         onChange={e => setPassword(e.target.value)}
                         name="password" 
                         type="password" 
-                        ref={passwordRef}
                         className="border-grey-200 border-2 rounded w-full p-2 h-10"
                         required
                     />
@@ -89,14 +83,16 @@ const Signup = ({ history }) => {
                         onChange={e => setConfirmPassword(e.target.value)}
                         name="password" 
                         type="password" 
-                        ref={passwordConfirmRef}
                         className="border-grey-200 border-2 rounded w-full p-2 h-10"
                         required
                     />
                 </div>
                 <div className="m-5">
+                {error && <p>Passwords need to match</p>}
+                </div>
+                <div className="m-5">
                     <button 
-                        onClick={onSignup}
+                        onClick={submitHandler}
                         className="bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 text-white px-10 py-2 rounded text-xl font-bold"
                     >
                         { loading ? 'Creating user ...' : 'Sign Up' }
