@@ -29,7 +29,6 @@ const Login = () => {
             .catch(e => alert(e.message))
             .finally(() => setLoading(false))
     }
-    console.log(getAuth().currentUser)
 
     return (
         <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">

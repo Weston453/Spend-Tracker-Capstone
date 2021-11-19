@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Signup = ({ history }) => {
@@ -31,7 +31,12 @@ const Signup = ({ history }) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
                 updateProfile(auth.currentUser, { displayName: name })
-                    .then(() => navigate('/'))
+                    .then(
+                        signInWithEmailAndPassword(auth, email, password)
+                            .then((userCredential) => {
+                                localStorage.setItem('token', userCredential._tokenResponse.idToken)
+                                navigate('/dashboard')
+                            }))
                     .catch((e) => alert(e.message))
             }).catch((e) => alert(e.message))
             .finally(() => setLoading(false))

@@ -1,19 +1,49 @@
 import React, { useState } from 'react'
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, updateProfile, updatePassword, updateEmail } from "firebase/auth";
+import { useNavigate } from 'react-router';
 
-const UpdateProfileModal = ({ modal, setModal }) => {
-    const [ name, setName ] = useState("")
+const UpdateProfileModal = ({ modal, setModal, name, setName, setAuthObj, updateName, setUpdateName }) => {
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
     const [ confirmPassword, setConfirmPassword ] = useState("")
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(false)
 
-    const submitHandler = () => {
-        const auth = getAuth()
-        updateProfile(auth.currentUser, {
+    const navigate = useNavigate()
 
-        })
+    const submitHandler = () => {
+        setLoading(true)
+        const auth = getAuth()
+
+        //update Name
+        const user= auth.currentUser
+
+        if (name !== '') {
+            updateProfile(auth.currentUser, { displayName: name })
+            setUpdateName(true)
+        } 
+
+        //email reset
+        const newEmail = email
+        console.log(auth.currentUser)
+
+        updateEmail(auth.currentUser, newEmail)
+            .then(console.log(newEmail))
+            .catch((e) => alert(e.message))
+
+        //password reset
+        if (password !== confirmPassword){
+            setError(true)
+        }
+
+        const newPassword = password;
+
+        updatePassword(user, newPassword)
+            .then(() => navigate('/dashboard'))
+            .catch((e) => alert(e.message))
+            .finally(() => setLoading(false))
+        alert('Your information has been updated!')
+        setModal(false)
     }
 
     return (
@@ -36,7 +66,7 @@ const UpdateProfileModal = ({ modal, setModal }) => {
                 name="name" 
                 type="name" 
                 className="border-grey-200 border-2 rounded w-full p-2 h-10"
-                required
+                placeholder="leave blank to keep current name"
             />
         </div>
         <div className="m-5">
@@ -47,7 +77,7 @@ const UpdateProfileModal = ({ modal, setModal }) => {
                 name="email" 
                 type="email" 
                 className="border-grey-200 border-2 rounded w-full p-2 h-10"
-                required
+                placeholder="leave blank to keep current email"
             />
         </div>
         <div className="m-5">
@@ -58,7 +88,7 @@ const UpdateProfileModal = ({ modal, setModal }) => {
                 name="password" 
                 type="password" 
                 className="border-grey-200 border-2 rounded w-full p-2 h-10"
-                required
+                placeholder="leave blank to keep current password"
             />
         </div>
         <div className="m-5">
@@ -69,7 +99,7 @@ const UpdateProfileModal = ({ modal, setModal }) => {
                 name="password" 
                 type="password" 
                 className="border-grey-200 border-2 rounded w-full p-2 h-10"
-                required
+                placeholder="leave blank to keep current password"
             />
         </div>
         <div className="m-5">
