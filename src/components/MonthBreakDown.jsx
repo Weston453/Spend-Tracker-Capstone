@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import backArrow from '../backArrow.svg'
 
-const MonthBreakDown = () => {
+const MonthBreakDown = ({ db, currentUserData, setCurrentUserData }) => {
     const navigate = useNavigate()
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -14,7 +14,8 @@ const MonthBreakDown = () => {
     })
 
     return (
-        <div className="w-full h-full bg-background bg-no-repeat bg-cover">
+        // <div className="w-full h-full bg-background bg-no-repeat bg-cover">
+        <div className="w-100 h-100 bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center">
             <div>
                 <div className="text-white space-x-28">
                     <button className="mx-10 text-3xl">
@@ -42,9 +43,45 @@ const MonthBreakDown = () => {
                         <p className="text-xl">Chart JS here</p>
                     </div>
                     <div className="flex-col">
-                        <h2 className="w-80 text-white text-xl font-bold">Purchases</h2>
-                        <div className="w-80 h-60 bg-white rounded shadow-lg">
-                            <p className="text-xl">Purchases</p>
+                        <h2 className="w-80 text-white text-xl font-bold ">Purchases</h2>
+                        <div className="w-80 bg-white rounded shadow-lg mb-10 p-1">
+                            <table className="w-full table-fixed">
+                                <thead>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentUserData.map((data) => {
+                                        return (
+                                            <>
+                                                <tr className="border-b">
+                                                    <td className="flex justify-center">${data.purchase}</td>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.category}</td>
+                                                </tr>
+                                            </>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                            <div>
+                                {/* {currentUserData.map((data) => {
+                                    return (
+                                        <div className="flex space-x-12">
+
+                                                <h1>{data.purchase}</h1>
+
+                                                <h1>{data.date}</h1>
+
+                                                <h1>{data.category}</h1>
+
+                                        </div>
+                                    )
+                                })} */}
+                            </div>
                         </div>
                     </div>
                 </div>

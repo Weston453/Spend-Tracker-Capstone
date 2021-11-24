@@ -13,14 +13,13 @@ import BsFirebaseTest from './components/BsFirebaseTest';
 import AddPurchase from './components/AddPurchase';
 import MonthBreakDown from './components/MonthBreakDown';
 
-
 const firebaseConfig = {
-  apiKey: "AIzaSyBVrO6EYEWNlLKpu0WLgaCXqj8h-RJ6uIM",
-  authDomain: "fir-v9-login.firebaseapp.com",
-  projectId: "fir-v9-login",
-  storageBucket: "fir-v9-login.appspot.com",
-  messagingSenderId: "570177004364",
-  appId: "1:570177004364:web:b49a27fa32a66c99d125e9"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 initializeApp(firebaseConfig);
@@ -28,7 +27,7 @@ initializeApp(firebaseConfig);
 function App() {
   const [ db, setDb ] = useState(getFirestore());
   const [ user, setUser ] = useState(null)
-  const [ users, setUsers ] =useState([])
+  const [ currentUserData, setCurrentUserData ] =useState([])
 
   useEffect(() => {
     const auth = getAuth()
@@ -44,10 +43,10 @@ function App() {
           <Route exact path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
-          <Route path="/Dashboard" element={<Dashboard db={db} users={users} setUsers={setUsers} />} />
+          <Route path="/Dashboard" element={<Dashboard db={db} currentUserData={currentUserData} setCurrentUserData={setCurrentUserData} />} />
           <Route path="/BsFirebaseTest" element={<BsFirebaseTest db={db} />} />
-          <Route path="/AddPurchase" element={<AddPurchase db={db} users={users} setUsers={setUsers} />} />
-          <Route path="/MonthBreakDown" element={<MonthBreakDown />} />
+          <Route path="/AddPurchase" element={<AddPurchase db={db} currentUserData={currentUserData} setCurrentUserData={setCurrentUserData} />} />
+          <Route path="/MonthBreakDown" element={<MonthBreakDown db={db} currentUserData={currentUserData} setCurrentUserData={setCurrentUserData} />} />
         </Routes>
       </BrowserRouter>
     </div>
