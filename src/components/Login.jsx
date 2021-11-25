@@ -18,12 +18,24 @@ const Login = () => {
         }
     })
 
+    // const onLogin = () => {
+    //     setLoading(true)
+    //     const auth = getAuth()
+    //     signInWithEmailAndPassword(auth, email, password)
+    //         .then((userCredential) => {
+    //             localStorage.setItem('token', userCredential._tokenResponse.idToken)
+    //             navigate('/dashboard')
+    //         })
+    //         .catch(e => alert(e.message))
+    //         .finally(() => setLoading(false))
+    // }
     const onLogin = () => {
         setLoading(true)
         const auth = getAuth()
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 localStorage.setItem('token', userCredential._tokenResponse.idToken)
+                localStorage.setItem('userId', JSON.stringify(auth.currentUser.uid || 'we suck at life'))
                 navigate('/dashboard')
             })
             .catch(e => alert(e.message))
@@ -31,7 +43,8 @@ const Login = () => {
     }
 
     return (
-        <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">
+        // <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">
+        <div className="w-full h-screen bg-background bg-no-repeat bg-cover flex justify-center items-center"> 
             {/* <h1>Spend Tracker</h1> */}
             <div className="w-96 bg-white rounded shadow-lg mx-5">
                 <div className="m-5">
@@ -60,7 +73,7 @@ const Login = () => {
                 <div className="m-5">
                     <button 
                         onClick={onLogin}
-                        className="bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 text-white px-10 py-2 rounded text-xl font-bold">
+                        className="bg-green-600 text-white px-10 py-2 rounded text-xl font-bold">
                         { loading ? 'Logging in ...' : 'Login' }
                     </button>
                 </div>

@@ -21,14 +21,15 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
             navigate('/')
         }
 
-        const getUsers = async () => {
-            const currentUData = query(usersCollectionRef, where("id", "==", auth.currentUser.uid));
+        // const getUsers = async () => {
+        //     const currentUData = query(usersCollectionRef, where("id", "==", auth.currentUser.uid));
     
-            const snapshot = await getDocs(currentUData);
-            setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
+        //     const snapshot = await getDocs(currentUData);
+        //     setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
             
-        }
-        getUsers()
+        // }
+        // getUsers()
+        console.log('addPurchase')
     }, [currentUserData])
 
     const add = async () => {
@@ -39,26 +40,19 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
                 purchase: purchase,
                 date: date,
                 category: category
-            });
-            console.log("Document written with ID: ", docRef.id);
+            })
+            console.log("Document written with ID: ", docRef.id)
             } catch (e) {
-                console.error("Error adding document: ", e);
+                console.error("Error adding document: ", e)
             }
         }
 
-        const getUserData = async () => {
-            const q = query(usersCollectionRef, where("id", "==", auth.currentUser.uid));
-    
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data());
-            });
-        }
-
     return (
-        <div className="w-100 h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flexjustify-center pt-3">
-            <button className="mx-10 text-3xl">
-                <Link to="/dashboard"><img className="h-8" src={backArrow} alt="back to dashboard" /></Link>
+        <div className="w-full h-screen bg-background bg-no-repeat bg-cover">
+            <button>
+                <Link to="/dashboard">
+                    <img className="h-8 fixed mt-2" src={backArrow} alt="back to dashboard" />
+                </Link>
             </button>
             <div className="mx-5">
                 <div className="w-80 bg-white rounded shadow-lg mx-5 mb-10 p-3 flex flex-col items-center">
@@ -97,7 +91,7 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
                     </div>
                     <button 
                         onClick={add}
-                        className="bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 text-white px-10 py-2 rounded font-bold"
+                        className="bg-green-600 text-white px-10 py-2 rounded text-xl font-bold"
                     >
                         Add
                     </button>

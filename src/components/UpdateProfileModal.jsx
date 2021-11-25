@@ -47,8 +47,9 @@ const UpdateProfileModal = ({ modal, setModal, name, setName, setAuthObj, update
     }
 
     return (
-        <div className="fixed w-screen h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">
-        <div className="w-96 bg-white rounded shadow-lg m-5">
+        // <div className="fixed w-screen h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">
+        <div className="top-0 fixed w-screen h-screen bg-background bg-no-repeat bg-cover flex justify-center items-center">
+        <div className="w-80 bg-white rounded shadow-lg m-5">
         <div className="m-5">
             <button 
                 onClick={() => setModal(false)}
@@ -108,7 +109,7 @@ const UpdateProfileModal = ({ modal, setModal, name, setName, setAuthObj, update
         <div className="m-5">
             <button 
                 onClick={submitHandler}
-                className="bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 text-white px-10 py-2 rounded text-xl font-bold"
+                className="bg-green-600 text-white px-10 py-2 rounded text-xl font-bold"
             >
                 { loading ? 'Updating ...' : 'Update' }
             </button>

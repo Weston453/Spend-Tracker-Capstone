@@ -22,7 +22,7 @@ const BsFirebaseTest = ({ db }) => {
             setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id })))
         }
         getUsers()
-        
+        console.log('this one')
     }, [])
     
     const getUserData = async () => {

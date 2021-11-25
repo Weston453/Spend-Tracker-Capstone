@@ -13,6 +13,9 @@ const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
     const navigate = useNavigate()
     const auth = getAuth()
     
+    const userId = JSON.parse(localStorage.getItem('userId'))
+    console.log(userId)
+
     const logout = () => {
         signOut(auth)
         .then(() => {
@@ -21,18 +24,34 @@ const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
         })
         .catch((e) => alert(e.message))
     }
+
+    const pickMonth = () => {
+        navigate('/monthBreakDown')
+    }
     
+
     useEffect(() => {
         const token = localStorage.getItem('token')
 
         if (!token) {
             navigate('/')
         }
-
+       
+        const getUsers = async () => {
+            const currentUData = query(usersCollectionRef, where("id", "==", userId))
+            const snapshot = await getDocs(currentUData);
+            setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
+        }
+        getUsers() 
     }, [])
+    // const getUsers = async () => {
+    //     const currentUData = query(usersCollectionRef, where("id", "==", auth.currentUser.uid))
 
+    //     const snapshot = await getDocs(currentUData);
+    //     setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
+    // }
     return (
-        <div className="w-100 h-100 bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center">
+        <div className="w-screen h-100 bg-background bg-no-repeat bg-cover flex justify-center items-center">
             {modal && <UpdateProfileModal modal={modal} setModal={setModal} name={name} setName={setName} updateName={updateName} setUpdateName={setUpdateName} / >}
             <div>
                 <div className="text-white space-x-28">
@@ -74,10 +93,10 @@ const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentUserData.map((data) => {
+                                {currentUserData.map((data, index) => {
                                     return (
                                         <>
-                                            <tr className="border-b">
+                                            <tr className="border-b" key={index}>
                                                 <td className="flex justify-center">${data.purchase}</td>
                                                 <td>{data.date}</td>
                                                 <td>{data.category}</td>
@@ -87,6 +106,9 @@ const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
                                 })}
                             </tbody>
                         </table>
+                        {/* <button className="border" onClick={getUsers}>
+                            just F'ning work
+                        </button> */}
                     </div>
                     <h2 className="text-white text-xl font-bold mx-5 mb-2 mt-2">Month Breakdown</h2>
                     <div className="w-80 bg-white rounded shadow-lg mx-5 mb-10 p-3 flex flex-col items-center">
@@ -104,10 +126,10 @@ const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
                             <option value="november">November</option>
                             <option value="december">December</option>
                         </select>
-                        <button>
-                            <Link to="/MonthBreakDown">-</Link>
-                        </button>
-                        <button className="bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 text-white px-10 py-2 rounded font-bold">
+                        <button 
+                            className="bg-green-600 text-white px-10 py-2 rounded text-xl font-bold"
+                            onClick={pickMonth}
+                        >
                             See Months Spend
                         </button>
                     </div>

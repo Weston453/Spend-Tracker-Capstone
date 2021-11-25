@@ -11,21 +11,23 @@ const MonthBreakDown = ({ db, currentUserData, setCurrentUserData }) => {
         if (!token) {
             navigate('/')
         }
+        console.log('month')
     })
 
     return (
-        // <div className="w-full h-full bg-background bg-no-repeat bg-cover">
-        <div className="w-100 h-100 bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center">
+        <div className="w-full h-100 bg-background bg-no-repeat bg-cover"> 
+            {/* <div className="z-0 w-32 overflow-hidden fixed right-0">
+                <div className="h-52 bg-green-500 -rotate-45 transform origin-top-left"></div>
+            </div> */}
             <div>
-                <div className="text-white space-x-28">
-                    <button className="mx-10 text-3xl">
-                        <Link to="/dashboard">
-                            <img className="h-8" src={backArrow} alt="settings" />
-                        </Link>
-                    </button>
-                </div>
-                <div className="flex-col flex items-center md:flex-row">
-                    <select className="w-80 border-grey-200 border-2 rounded p-2 h-10 mx-5 mb-5">
+                <button>
+                    <Link to="/dashboard">
+                        <img className="h-8 fixed" src={backArrow} alt="settings" />
+                    </Link>
+                </button>
+                <div className="flex-col flex items-center">
+                    <h2 className=" text-white text-xl font-bold mx-5 mb-5">Current Month Spend</h2>
+                    <select className="z-10 w-80 border-grey-200 border-2 rounded p-2 h-10 mx-5 mb-5">
                         <option value="january">January</option>
                         <option value="february">February</option>
                         <option value="march">March</option>
@@ -44,7 +46,7 @@ const MonthBreakDown = ({ db, currentUserData, setCurrentUserData }) => {
                     </div>
                     <div className="flex-col">
                         <h2 className="w-80 text-white text-xl font-bold ">Purchases</h2>
-                        <div className="w-80 bg-white rounded shadow-lg mb-10 p-1">
+                        <div className="w-80 h-96 bg-white rounded shadow-lg mb-10 p-1">
                             <table className="w-full table-fixed">
                                 <thead>
                                     <tr>
@@ -67,21 +69,6 @@ const MonthBreakDown = ({ db, currentUserData, setCurrentUserData }) => {
                                     })}
                                 </tbody>
                             </table>
-                            <div>
-                                {/* {currentUserData.map((data) => {
-                                    return (
-                                        <div className="flex space-x-12">
-
-                                                <h1>{data.purchase}</h1>
-
-                                                <h1>{data.date}</h1>
-
-                                                <h1>{data.category}</h1>
-
-                                        </div>
-                                    )
-                                })} */}
-                            </div>
                         </div>
                     </div>
                 </div>

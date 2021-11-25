@@ -43,7 +43,7 @@ const Signup = ({ history }) => {
     }
 
     return (
-        <div className="w-full h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center p-5px">
+        <div className="w-full h-screen bg-background bg-no-repeat bg-cover flex justify-center items-center">
             <div className="w-96 bg-white rounded shadow-lg m-5">
                 <div className="m-5">
                     <h2 className="block text-xl font-bold mb-2">Create Account</h2>
@@ -98,7 +98,7 @@ const Signup = ({ history }) => {
                 <div className="m-5">
                     <button 
                         onClick={submitHandler}
-                        className="bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 text-white px-10 py-2 rounded text-xl font-bold"
+                        className="bg-green-600 text-white px-10 py-2 rounded text-xl font-bold"
                     >
                         { loading ? 'Creating user ...' : 'Sign Up' }
                     </button>

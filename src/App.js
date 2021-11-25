@@ -34,7 +34,10 @@ function App() {
     onAuthStateChanged(auth, user => {
       setUser(user)
     })
+    console.log('app')
   })
+
+  
 
   return (
     <div className="App">
