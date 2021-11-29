@@ -27,7 +27,7 @@ initializeApp(firebaseConfig);
 function App() {
   const [ db, setDb ] = useState(getFirestore());
   const [ user, setUser ] = useState(null)
-  const [ currentUserData, setCurrentUserData ] =useState([])
+  // const [ currentUserData, setCurrentUserData ] = useState([])
 
   useEffect(() => {
     const auth = getAuth()
@@ -46,10 +46,10 @@ function App() {
           <Route exact path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
-          <Route path="/Dashboard" element={<Dashboard db={db} currentUserData={currentUserData} setCurrentUserData={setCurrentUserData} />} />
+          <Route path="/Dashboard" element={<Dashboard db={db} />} />
           <Route path="/BsFirebaseTest" element={<BsFirebaseTest db={db} />} />
-          <Route path="/AddPurchase" element={<AddPurchase db={db} currentUserData={currentUserData} setCurrentUserData={setCurrentUserData} />} />
-          <Route path="/MonthBreakDown" element={<MonthBreakDown db={db} currentUserData={currentUserData} setCurrentUserData={setCurrentUserData} />} />
+          <Route path="/AddPurchase" element={<AddPurchase db={db} />} />
+          <Route path="/MonthBreakDown" element={<MonthBreakDown db={db} />} />
         </Routes>
       </BrowserRouter>
     </div>

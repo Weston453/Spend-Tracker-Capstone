@@ -35,6 +35,7 @@ const Signup = ({ history }) => {
                         signInWithEmailAndPassword(auth, email, password)
                             .then((userCredential) => {
                                 localStorage.setItem('token', userCredential._tokenResponse.idToken)
+                                localStorage.setItem('userId', JSON.stringify(auth.currentUser.uid || 'we suck at life'))
                                 navigate('/dashboard')
                             }))
                     .catch((e) => alert(e.message))

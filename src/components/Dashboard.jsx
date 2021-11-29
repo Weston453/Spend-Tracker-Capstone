@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, signOut } from 'firebase/auth'
-import { getDocs, collection, query, where } from 'firebase/firestore'
+import { getDocs, collection, query, where, orderBy, limit } from 'firebase/firestore'
 import UpdateProfileModal from './UpdateProfileModal'
 import cog from '../cog.svg'
 
-const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
+// const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
+const Dashboard = ({ db }) => {
+    const [ currentUserData, setCurrentUserData ] = useState([])
     const [ modal, setModal ] = useState(false)
     const [ updateName, setUpdateName ] = useState(false)
     const [ name, setName ] = useState('')
@@ -37,42 +39,45 @@ const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
             navigate('/')
         }
        
+        // const getUsers = async () => {
+        //     const currentUData = query(usersCollectionRef, where("id", "==", userId))
+        //     const snapshot = await getDocs(currentUData);
+        //     setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
+        // }
+        // getUsers() 
         const getUsers = async () => {
-            const currentUData = query(usersCollectionRef, where("id", "==", userId))
+            const currentUData = query(usersCollectionRef, where("id", "==", userId), orderBy("date", "desc"), limit(5))
             const snapshot = await getDocs(currentUData);
             setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
         }
         getUsers() 
     }, [])
-    // const getUsers = async () => {
-    //     const currentUData = query(usersCollectionRef, where("id", "==", auth.currentUser.uid))
 
-    //     const snapshot = await getDocs(currentUData);
-    //     setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
-    // }
     return (
         <div className="w-screen h-100 bg-background bg-no-repeat bg-cover flex justify-center items-center">
             {modal && <UpdateProfileModal modal={modal} setModal={setModal} name={name} setName={setName} updateName={updateName} setUpdateName={setUpdateName} / >}
             <div>
-                <div className="text-white space-x-28">
-                    <button className="mx-10 text-3xl">
-                        <Link to="/AddPurchase">+</Link>
-                    </button>
-                    <button onClick={logout}>
-                        <u>Logout</u>
-                    </button>
-                    <button onClick={() => {setModal(true)}}>
-                        <img className="h-10" src={cog} alt="settings" />
-                    </button>
-                </div>
-                <div className="text-white font-bold text-xl mx-5">
-                    {
-                        !updateName
+                <div className="w-screen h-20 bg-green-700">
+                    <div className="text-white space-x-">
+                        <button className="mx- text-3xl">
+                            <Link to="/AddPurchase">+</Link>
+                        </button>
+                        <button onClick={logout}>
+                            <u>Logout</u>
+                        </button>
+                        <button onClick={() => {setModal(true)}}>
+                            <img className="h-10" src={cog} alt="settings" />
+                        </button>
+                    </div>
+                    <div className="text-white font-bold text-xl mx-5">
+                        Welcome, {
+                            !updateName
                             ?
                             auth.currentUser ? auth.currentUser.displayName : '...'
-                                :
-                                name
-                    }   
+                            :
+                            name
+                        }   
+                    </div>
                 </div>
                 <div className="mx-5">
                     <h2 className="text-white text-xl font-bold mx-5 mb-2 mt-2">Current Month Spend</h2>
@@ -106,9 +111,6 @@ const Dashboard = ({ db, currentUserData, setCurrentUserData }) => {
                                 })}
                             </tbody>
                         </table>
-                        {/* <button className="border" onClick={getUsers}>
-                            just F'ning work
-                        </button> */}
                     </div>
                     <h2 className="text-white text-xl font-bold mx-5 mb-2 mt-2">Month Breakdown</h2>
                     <div className="w-80 bg-white rounded shadow-lg mx-5 mb-10 p-3 flex flex-col items-center">

@@ -4,11 +4,13 @@ import { collection, query, where, getDocs, addDoc } from "firebase/firestore"
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import backArrow from '../backArrow.svg'
+import AddPurchModal from './AddPurchModal'
 
 const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
     const [ purchase, setPurchase ] = useState('')
     const [ date, setDate ] = useState('')
     const [ category, setCategory ] = useState('')
+    const [ modal, setModal ] = useState(false)
 
     const usersCollectionRef = collection(db, "users")
     const auth = getAuth()
@@ -42,13 +44,16 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
                 category: category
             })
             console.log("Document written with ID: ", docRef.id)
-            } catch (e) {
-                console.error("Error adding document: ", e)
-            }
+        } catch (e) {
+            console.error("Error adding document: ", e)
         }
+        setModal(true)
+    }
 
     return (
         <div className="w-full h-screen bg-background bg-no-repeat bg-cover">
+            {/* {modal && <UpdateProfileModal modal={modal} setModal={setModal} name={name} setName={setName} updateName={updateName} setUpdateName={setUpdateName} / >} */}
+            {modal && <AddPurchModal setModal={setModal} db={db}/>}
             <button>
                 <Link to="/dashboard">
                     <img className="h-8 fixed mt-2" src={backArrow} alt="back to dashboard" />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { getAuth, updateProfile, updatePassword, updateEmail } from "firebase/auth";
-import { useNavigate } from 'react-router';
+import { getAuth, updateProfile, updatePassword, updateEmail } from "firebase/auth"
+import { useNavigate } from 'react-router'
 
 const UpdateProfileModal = ({ modal, setModal, name, setName, setAuthObj, updateName, setUpdateName }) => {
     const [ email, setEmail ] = useState("")
