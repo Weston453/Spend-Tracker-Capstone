@@ -1,8 +1,8 @@
 import React, { useState, useEffect  } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { getDocs, collection, query, where, orderBy, limit } from 'firebase/firestore'
+import { getDocs, collection, query, where, orderBy, limit, doc } from 'firebase/firestore'
 
-const AddPurchModal = ({ setModal, db }) => {
+const AddPurchModal = ({ setModal, db, docId }) => {
     const [ currentUserData, setCurrentUserData ] = useState([])
     const usersCollectionRef = collection(db, "users")
     const navigate = useNavigate()
@@ -15,10 +15,16 @@ const AddPurchModal = ({ setModal, db }) => {
             navigate('/')
         }
 
+        // const getUsers = async () => {
+        //     const currentUData = query(usersCollectionRef, where("id", "==", userId), orderBy("date", "desc"), limit(1))
+        //     const snapshot = await getDocs(currentUData);
+        //     setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
+        // }
+        // getUsers() 
+
         const getUsers = async () => {
-            const currentUData = query(usersCollectionRef, where("id", "==", userId), orderBy("date", "desc"), limit(1))
-            const snapshot = await getDocs(currentUData);
-            setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
+            const docRef = doc(db, "users" )
+            console.log(docRef)
         }
         getUsers() 
     }, [])

@@ -18,14 +18,14 @@ const Dashboard = ({ db }) => {
     const userId = JSON.parse(localStorage.getItem('userId'))
     console.log(userId)
 
-    const logout = () => {
-        signOut(auth)
-        .then(() => {
-            localStorage.removeItem('token')
-            navigate('/')
-        })
-        .catch((e) => alert(e.message))
-    }
+    // const logout = () => {
+    //     signOut(auth)
+    //     .then(() => {
+    //         localStorage.removeItem('token')
+    //         navigate('/')
+    //     })
+    //     .catch((e) => alert(e.message))
+    // }
 
     const pickMonth = () => {
         navigate('/monthBreakDown')
@@ -54,33 +54,41 @@ const Dashboard = ({ db }) => {
     }, [])
 
     return (
-        <div className="w-screen h-100 bg-background bg-no-repeat bg-cover flex justify-center items-center">
+        <div className="w-100 h-100 bg-background bg-no-repeat bg-cover flex items-center">
             {modal && <UpdateProfileModal modal={modal} setModal={setModal} name={name} setName={setName} updateName={updateName} setUpdateName={setUpdateName} / >}
             <div>
-                <div className="w-screen h-20 bg-green-700">
-                    <div className="text-white space-x-">
-                        <button className="mx- text-3xl">
+                <div className="fixed w-screen h-19 bg-green-700 mb-10">
+                    <div className="text-white flex items-center justify-between mx-3">
+                        <div>
+                        <button className="text-7xl">
                             <Link to="/AddPurchase">+</Link>
                         </button>
-                        <button onClick={logout}>
+                        </div>
+                        <div>
+                        <h1 className="text-2xl">Spend Tracker</h1>
+                        </div>
+                        {/* <button onClick={logout}>
                             <u>Logout</u>
-                        </button>
-                        <button onClick={() => {setModal(true)}}>
+                        </button> */}
+                        <div>
+                        <button className="" onClick={() => {setModal(true)}}>
                             <img className="h-10" src={cog} alt="settings" />
                         </button>
+                        </div>
                     </div>
-                    <div className="text-white font-bold text-xl mx-5">
-                        Welcome, {
+                </div>
+                    <div className="text-white text-lg mt-20 mb-4 mr-3 flex-col text-right">
+                        <p></p>
+                        <p>Welcome, {
                             !updateName
                             ?
                             auth.currentUser ? auth.currentUser.displayName : '...'
                             :
                             name
-                        }   
+                        }</p> 
                     </div>
-                </div>
                 <div className="mx-5">
-                    <h2 className="text-white text-xl font-bold mx-5 mb-2 mt-2">Current Month Spend</h2>
+                    <h2 className="text-white text-xl font-bold mx-5 mb-2 ">Current Month Spend</h2>
                     <div className="w-80 bg-white rounded shadow-lg mx-5 mb-3 p-1">
                         <p className="m-5 text-xl">$1240.00</p>
                     </div>

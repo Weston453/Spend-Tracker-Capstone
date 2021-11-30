@@ -11,6 +11,7 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
     const [ date, setDate ] = useState('')
     const [ category, setCategory ] = useState('')
     const [ modal, setModal ] = useState(false)
+    const [ docId, setDocId ] = useState('')
 
     const usersCollectionRef = collection(db, "users")
     const auth = getAuth()
@@ -44,6 +45,7 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
                 category: category
             })
             console.log("Document written with ID: ", docRef.id)
+            setDocId(docRef.id)
         } catch (e) {
             console.error("Error adding document: ", e)
         }
@@ -52,8 +54,7 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
 
     return (
         <div className="w-full h-screen bg-background bg-no-repeat bg-cover">
-            {/* {modal && <UpdateProfileModal modal={modal} setModal={setModal} name={name} setName={setName} updateName={updateName} setUpdateName={setUpdateName} / >} */}
-            {modal && <AddPurchModal setModal={setModal} db={db}/>}
+            {modal && <AddPurchModal setModal={setModal} db={db} docId={docId} />}
             <button>
                 <Link to="/dashboard">
                     <img className="h-8 fixed mt-2" src={backArrow} alt="back to dashboard" />
@@ -76,7 +77,7 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
                             value={date}
                             onChange={e => setDate(e.target.value)}
                             name="date" 
-                            type="date" 
+                            type="date"
                             className="border-grey-200 border-2 rounded w-full p-2 h-12"
                         />
                         <h2 className="text-xl font-bold mb-2 mt-2">Category</h2>

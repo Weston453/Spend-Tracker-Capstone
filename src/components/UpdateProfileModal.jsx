@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { getAuth, updateProfile, updatePassword, updateEmail } from "firebase/auth"
+import { getAuth, updateProfile, updatePassword, updateEmail, signOut } from "firebase/auth"
 import { useNavigate } from 'react-router'
 
 const UpdateProfileModal = ({ modal, setModal, name, setName, setAuthObj, updateName, setUpdateName }) => {
@@ -8,6 +8,7 @@ const UpdateProfileModal = ({ modal, setModal, name, setName, setAuthObj, update
     const [ confirmPassword, setConfirmPassword ] = useState("")
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(false)
+    const auth = getAuth()
 
     const navigate = useNavigate()
 
@@ -46,9 +47,17 @@ const UpdateProfileModal = ({ modal, setModal, name, setName, setAuthObj, update
         setModal(false)
     }
 
+    const logout = () => {
+        signOut(auth)
+        .then(() => {
+            localStorage.removeItem('token')
+            navigate('/')
+        })
+        .catch((e) => alert(e.message))
+    }
+
     return (
-        // <div className="fixed w-screen h-screen bg-gradient-to-r from-yellow-200 via-red-500 to-pink-500 flex justify-center items-center">
-        <div className="top-0 fixed w-screen h-screen bg-background bg-no-repeat bg-cover flex justify-center items-center">
+        <div className="top-0 w-screen h-screen fixed bg-gray-600 bg-opacity-80 flex items-center justify-center">
         <div className="w-80 bg-white rounded shadow-lg m-5">
         <div className="m-5">
             <button 
@@ -114,9 +123,12 @@ const UpdateProfileModal = ({ modal, setModal, name, setName, setAuthObj, update
                 { loading ? 'Updating ...' : 'Update' }
             </button>
         </div>
-        <div className="m-5">
+        <button className="mx-5 mb-5" onClick={logout}>
+                            <u>Logout</u>
+                        </button>
+        {/* <div className="mx-5">
         <button onClick={() => setModal(false)}><u>Cancel</u></button>
-        </div>
+        </div> */}
     </div>
     </div>
     )
