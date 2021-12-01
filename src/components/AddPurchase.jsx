@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { getAuth } from 'firebase/auth'
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore"
+import { collection, query, where, getDocs, addDoc, orderBy, limit } from "firebase/firestore"
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import backArrow from '../backArrow.svg'
 import AddPurchModal from './AddPurchModal'
 
 const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
+    // const userId = JSON.parse(localStorage.getItem('userId'))
     const [ purchase, setPurchase ] = useState('')
     const [ date, setDate ] = useState('')
     const [ category, setCategory ] = useState('')
@@ -25,15 +26,14 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
         }
 
         // const getUsers = async () => {
-        //     const currentUData = query(usersCollectionRef, where("id", "==", auth.currentUser.uid));
-    
+        //     const currentUData = query(usersCollectionRef, where("id", "==", userId), orderBy("date", "desc"), limit(1))
         //     const snapshot = await getDocs(currentUData);
         //     setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
             
         // }
         // getUsers()
-        console.log('addPurchase')
-    }, [currentUserData])
+   
+    }, [])
 
     const add = async () => {
         try {
@@ -89,7 +89,7 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
                             <option value="">Pick a Category</option>
                             <option value="Living">Living</option>
                             <option value="Food">Food</option>
-                            <option value="Transportaton">Transportation</option>
+                            <option value="Transportaton">Transportaton</option>
                             <option value="H & W">Health & Wellness</option>
                             <option value="Discretionary">Discretionary</option>
                             <option value="Misc">Misc</option>

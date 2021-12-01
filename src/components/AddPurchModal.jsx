@@ -15,18 +15,18 @@ const AddPurchModal = ({ setModal, db, docId }) => {
             navigate('/')
         }
 
-        // const getUsers = async () => {
-        //     const currentUData = query(usersCollectionRef, where("id", "==", userId), orderBy("date", "desc"), limit(1))
-        //     const snapshot = await getDocs(currentUData);
-        //     setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
-        // }
-        // getUsers() 
-
         const getUsers = async () => {
-            const docRef = doc(db, "users" )
-            console.log(docRef)
+            const currentUData = query(usersCollectionRef, where("id", "==", userId), orderBy("date", "desc"), limit(1))
+            const snapshot = await getDocs(currentUData);
+            setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
         }
         getUsers() 
+
+        // const getUsers = async () => {
+        //     const docRef = doc(db, "users" )
+        //     console.log(docRef)
+        // }
+        // getUsers() 
     }, [])
 
     return (
