@@ -16,10 +16,11 @@ export const options = {
     responsive: true,
     plugins: {
       legend: {
+        display: false,
         position: 'top',
       },
       title: {
-        display: true,
+        display: false,
         text: 'Category Spend',
       },
     },
@@ -334,7 +335,7 @@ const MonthBreakDown = ({ db }) => {
                                         return (
                                             // (month === '' ?
                                             <>
-                                                <tr className="border-b" key={index}>
+                                                <tr className="border-t" key={index}>
                                                     <td className="flex justify-center">${data.purchase}</td>
                                                     <td>{data.date}</td>
                                                     <td>{data.category}</td>

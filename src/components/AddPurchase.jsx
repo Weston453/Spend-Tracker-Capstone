@@ -55,12 +55,15 @@ const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
     return (
         <div className="w-full h-screen bg-background bg-no-repeat bg-cover">
             {modal && <AddPurchModal setModal={setModal} db={db} docId={docId} />}
-            <button>
-                <Link to="/dashboard">
-                    <img className="h-8 fixed mt-2" src={backArrow} alt="back to dashboard" />
-                </Link>
-            </button>
-            <div className="mx-5">
+            <div className="w-screen h-19 bg-green-700 mb-10 flex items-center">
+                <button>
+                    <Link to="/dashboard">
+                        <img className="h-8" src={backArrow} alt="back to dashboard" />
+                    </Link>
+                </button>
+                <h2 className="text-white text-2xl order-last font-bold mt-4 mx-auto mb-5 mr-28">Add Purchase</h2>
+            </div>
+            <div className="flex-col flex items-center">
                 <div className="w-80 bg-white rounded shadow-lg mx-5 mb-10 p-3 flex flex-col items-center">
                     <div>
                         <h2 className="text-xl font-bold mb-2 mt-2">Amount Spent</h2>

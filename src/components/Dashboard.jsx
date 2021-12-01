@@ -18,20 +18,21 @@ export const data = {
         label: '# of Votes',
         data: [12, 19, 3, 5, 2, 3],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+          'blue',
+          'green',
+          'orange',
+          'red',
+          'purple',
+          'pink',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
+            'white',
+        //   'rgba(255, 99, 132, 1)',
+        //   'rgba(54, 162, 235, 1)',
+        //   'rgba(255, 206, 86, 1)',
+        //   'rgba(75, 192, 192, 1)',
+        //   'rgba(153, 102, 255, 1)',
+        //   'rgba(255, 159, 64, 1)',
         ],
         borderWidth: 1,
       },
@@ -95,10 +96,10 @@ const Dashboard = ({ db }) => {
     }, [])
 
     return (
-        <div className="w-screen h-100 bg-background bg-no-repeat bg-cover flex items-center">
+        <div className="w-screen h-100 bg-background bg-no-repeat bg-cover">
             {modal && <UpdateProfileModal modal={modal} setModal={setModal} name={name} setName={setName} updateName={updateName} setUpdateName={setUpdateName} / >}
             <div>
-                <div className="w-screen h-19 bg-green-700">
+                <div className="w-screen h-19 bg-green-700 py-2">
                     <div className="text-white flex items-center justify-between mx-3">
                         <div className="mt-2">
                         <button className="text-7xl">
@@ -118,7 +119,7 @@ const Dashboard = ({ db }) => {
                         </div>
                     </div>
                 </div>
-                    <div className="text-white text-lg mb-4 mr-5 flex-col text-right">
+                    <div className="text-white text-lg mb-4 mr-2 flex-col text-right">
                         <p>Welcome, {
                             !updateName
                             ?
@@ -127,64 +128,66 @@ const Dashboard = ({ db }) => {
                             name
                         }</p> 
                     </div>
-                <div className="mx-5">
-                    <h2 className="text-white text-xl font-bold mx-5 mb-2 ">Current Month Spend</h2>
-                    <div className="w-80 bg-white rounded shadow-lg mx-5 mb-3 p-1">
-                        <p className="m-5 text-xl">{total}</p>
-                        <button onClick={sumPurchases}>temp sum</button>
-                    </div>
-{/* --------------------------------------------------------------------------------------------------------------------- */}
-                    <div className="w-80 bg-white rounded shadow-lg mx-5 pt-2 pb-2 flex justify-center items-center">
-                        <Doughnut data={data} />  
-                    </div>
+                <div className="flex-col flex items-center">
+                    <div>
+                        <h2 className="text-white text-xl font-bold mx-5 mb-2">Total Spend</h2>
+                        <div className="w-80 bg-white rounded shadow-lg mx-5 mb-3 p-1">
+                            <p className="m-5 text-xl">{total}</p>
+                            <button onClick={sumPurchases}>temp sum</button>
+                        </div>
+    {/* --------------------------------------------------------------------------------------------------------------------- */}
+                        <div className="w-80 bg-white rounded shadow-lg mx-5 pt-2 pb-2 flex justify-center items-center">
+                            <Doughnut data={data} />  
+                        </div>
 
-                    <h2 className="text-white text-xl font-bold mx-5 mb-2 mt-2">Recent Purchases</h2>
-                    <div className="w-80 bg-white rounded shadow-lg mx-5 p-1 flex justify-center items-center">
-                        <table className="w-full table-fixed">
-                            <thead>
-                                <tr>
-                                    <th>Amount</th>
-                                    <th>Date</th>
-                                    <th>Category</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {currentUserData.map((data, index) => {
-                                    return (
-                                        <>
-                                            <tr className="border-b" key={index}>
-                                                <td className="flex justify-center">${data.purchase}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.category}</td>
-                                            </tr>
-                                        </>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                    {/* <h2 className="text-white text-xl font-bold mx-5 mb-2 mt-2"></h2> */}
-                    <div className="w-80 bg-white rounded shadow-lg mx-5 mt-4 mb-10 p-3 flex flex-col items-center">
-                        {/* <select className="border-grey-200 border-2 rounded w-full p-2 h-10 mb-5">
-                            <option value="january">January</option>
-                            <option value="february">February</option>
-                            <option value="march">March</option>
-                            <option value="april">April</option>
-                            <option value="may">May</option>
-                            <option value="june">June</option>
-                            <option value="july">July</option>
-                            <option value="august">August</option>
-                            <option value="september">September</option>
-                            <option value="october">October</option>
-                            <option value="november">November</option>
-                            <option value="december">December</option>
-                        </select> */}
-                        <button 
-                            className="bg-green-600 text-white px-10 py-2 rounded text-xl font-bold"
-                            onClick={pickMonth}
-                        >
-                            Category Breakdown
-                        </button>
+                        <h2 className="text-white text-xl font-bold mx-5 mb-2 mt-2">Recent Purchases</h2>
+                        <div className="w-80 bg-white rounded shadow-lg mx-5 mb-3 p-1 flex justify-center items-center">
+                            <table className="w-full table-fixed">
+                                <thead>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        <th>Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentUserData.map((data, index) => {
+                                        return (
+                                            <>
+                                                <tr className="border-t" key={index}>
+                                                    <td className="flex justify-center">${data.purchase}</td>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.category}</td>
+                                                </tr>
+                                            </>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                        {/* <h2 className="text-white text-xl font-bold mx-5 mb-2 mt-2"></h2> */}
+                        <div className="w-80 bg-white rounded shadow-lg mx-5 mt-4 mb-10 p-3 flex flex-col items-center">
+                            {/* <select className="border-grey-200 border-2 rounded w-full p-2 h-10 mb-5">
+                                <option value="january">January</option>
+                                <option value="february">February</option>
+                                <option value="march">March</option>
+                                <option value="april">April</option>
+                                <option value="may">May</option>
+                                <option value="june">June</option>
+                                <option value="july">July</option>
+                                <option value="august">August</option>
+                                <option value="september">September</option>
+                                <option value="october">October</option>
+                                <option value="november">November</option>
+                                <option value="december">December</option>
+                            </select> */}
+                            <button 
+                                className="bg-green-600 text-white px-10 py-2 rounded text-xl font-bold"
+                                onClick={pickMonth}
+                            >
+                                Category Breakdown
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
