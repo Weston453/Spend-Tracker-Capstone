@@ -1,38 +1,28 @@
 import React, { useState, useEffect } from 'react'
-import { getAuth } from 'firebase/auth'
-import { collection, query, where, getDocs, addDoc, orderBy, limit } from "firebase/firestore"
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+
+import { getAuth } from 'firebase/auth'
+import { collection, addDoc } from "firebase/firestore"
+
 import backArrow from '../backArrow.svg'
 import AddPurchModal from './AddPurchModal'
 
 const AddPurchase = ({ db, currentUserData, setCurrentUserData }) => {
-    // const userId = JSON.parse(localStorage.getItem('userId'))
     const [ purchase, setPurchase ] = useState('')
     const [ date, setDate ] = useState('')
     const [ category, setCategory ] = useState('')
-    const [ modal, setModal ] = useState(false)
     const [ docId, setDocId ] = useState('')
+    const [ modal, setModal ] = useState(false)
 
-    const usersCollectionRef = collection(db, "users")
     const auth = getAuth()
     const navigate = useNavigate()
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-
         if (!token) {
             navigate('/')
         }
-
-        // const getUsers = async () => {
-        //     const currentUData = query(usersCollectionRef, where("id", "==", userId), orderBy("date", "desc"), limit(1))
-        //     const snapshot = await getDocs(currentUData);
-        //     setCurrentUserData(snapshot.docs.map((doc) => ({...doc.data(), id: doc.id })))
-            
-        // }
-        // getUsers()
-   
     }, [])
 
     const add = async () => {

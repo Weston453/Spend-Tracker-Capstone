@@ -1,6 +1,6 @@
 import React, { useState, useEffect  } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { getDocs, collection, query, where, orderBy, limit, doc } from 'firebase/firestore'
+import { getDocs, collection, query, where, orderBy, limit } from 'firebase/firestore'
 
 const AddPurchModal = ({ setModal, db, docId }) => {
     const [ currentUserData, setCurrentUserData ] = useState([])
@@ -10,7 +10,6 @@ const AddPurchModal = ({ setModal, db, docId }) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-
         if (!token) {
             navigate('/')
         }
@@ -22,11 +21,6 @@ const AddPurchModal = ({ setModal, db, docId }) => {
         }
         getUsers() 
 
-        // const getUsers = async () => {
-        //     const docRef = doc(db, "users" )
-        //     console.log(docRef)
-        // }
-        // getUsers() 
     }, [])
 
     return (
@@ -39,32 +33,32 @@ const AddPurchModal = ({ setModal, db, docId }) => {
                     X
                 </button>
                 <div className="flex flex-col items-center">
-                <h2>Purchase Added Successfully!</h2>
-                <table className="w-full table-fixed">
-                            <thead>
-                                <tr>
-                                    <th>Amount</th>
-                                    <th>Date</th>
-                                    <th>Category</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {currentUserData.map((data, index) => {
-                                    return (
-                                        <>
-                                            <tr className="border-b" key={index}>
-                                                <td className="flex justify-center">${data.purchase}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.category}</td>
-                                            </tr>
-                                        </>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
-                <button onClick={() => setModal(false)}>
-                    <Link to="/dashboard"><u>Dashboard</u></Link>
-                </button>
+                    <h2>Purchase Added Successfully!</h2>
+                    <table className="w-full table-fixed">
+                        <thead>
+                            <tr>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {currentUserData.map((data, index) => {
+                                return (
+                                    <>
+                                        <tr className="border-b" key={index}>
+                                            <td className="flex justify-center">${data.purchase.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}</td>
+                                            <td>{data.date}</td>
+                                            <td>{data.category}</td>
+                                        </tr>
+                                    </>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                    <button onClick={() => setModal(false)}>
+                        <Link to="/dashboard"><u>Dashboard</u></Link>
+                    </button>
                 </div>
             </div>
         </div>
