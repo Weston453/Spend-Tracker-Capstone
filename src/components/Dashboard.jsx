@@ -57,7 +57,6 @@ const Dashboard = ({ db }) => {
     //Total spend function------------------------------------------------
     const stephenFunc = () => {
         let stephenTotal = 0
-        console.log(currentUserData.length)//----------------this one
         for (let i = 0; i < currentUserData.length; i++) {
             stephenTotal += +currentUserData[i].purchase
         }
@@ -74,7 +73,6 @@ const Dashboard = ({ db }) => {
         let livingTotalStart = 0
         for (let i = 0; i < living.length; i++) {
             livingTotalStart += +living[i].purchase
-            console.log(livingTotalStart)
         }
         if (livingTotalStart === 0) {
             return('...')
@@ -88,7 +86,6 @@ const Dashboard = ({ db }) => {
         let foodTotalStart = 0
         for (let i = 0; i < food.length; i++) {
             foodTotalStart += +food[i].purchase
-            console.log(foodTotalStart)
         }
         if (foodTotalStart === 0) {
             return('...')
@@ -212,8 +209,8 @@ const Dashboard = ({ db }) => {
             borderWidth: 3,
           },
         ],
-      };
-    
+      }
+
     return (
         <div className="w-screen h-100 bg-background bg-no-repeat bg-cover">
             {modal && <UpdateProfileModal modal={modal} setModal={setModal} name={name} setName={setName} updateName={updateName} setUpdateName={setUpdateName} / >}
@@ -230,7 +227,7 @@ const Dashboard = ({ db }) => {
                         </div>
                         <div>
                             <button onClick={() => {setModal(true)}}>
-                                <img className="h-10 mt-2 mr-" src={cog} alt="settings" />
+                                <img className="h-10 mt-2" src={cog} alt="settings" />
                             </button>
                         </div>
                     </div>
@@ -263,7 +260,7 @@ const Dashboard = ({ db }) => {
                                         <th>Category</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="flex-col justify-center items-center">
                                     {currentUserData.map((data, index) => {
                                         return (
                                             <>

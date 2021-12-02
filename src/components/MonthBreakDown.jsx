@@ -11,20 +11,6 @@ import pencil from '../pencil.svg'
 import trash from '../trash.svg'
 
 ChartJS.register( CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend );
-
-// export const options = {
-//     responsive: true,
-//     plugins: {
-//       legend: {
-//         display: false,
-//         position: 'top',
-//       },
-//       title: {
-//         display: false,
-//         text: 'Category Spend',
-//       },
-//     },
-//   };
   
 const MonthBreakDown = ({ db }) => {
     const [ currentUserData, setCurrentUserData ] = useState([])
@@ -47,7 +33,6 @@ const MonthBreakDown = ({ db }) => {
     const auth = getAuth()
     const userId = JSON.parse(localStorage.getItem('userId'))
     
-
     useEffect(() => {
         const token = localStorage.getItem('token')
         if (!token) {
@@ -196,7 +181,9 @@ const MonthBreakDown = ({ db }) => {
         labels: ['Living', 'Food', 'Transportation', 'H & W', 'Discretionary', 'Misc'],
         datasets: [
             {
-            label: 'Dataset 1',
+            labels: {
+
+            },
             data: [livingFunc(), foodFunc(), transportationFunc(), healthFunc(), discretionaryFunc(), miscFunc()],
             backgroundColor: [
               'blue',
@@ -213,7 +200,7 @@ const MonthBreakDown = ({ db }) => {
     const options = {
         responsive: true,
         plugins: {
-          legend: {
+            legend: {
             display: false,
             position: 'top',
           },
@@ -232,7 +219,6 @@ const MonthBreakDown = ({ db }) => {
             date: dateEdit,
             category: categoryEdit
         });
-        alert('yay')
         window.location.reload()
     }
     
@@ -248,7 +234,7 @@ const MonthBreakDown = ({ db }) => {
     }
   
     return (
-        <div className="w-screen h-100 bg-background bg-no-repeat bg-cover"> 
+        <div className="w-screen h-screen bg-background bg-no-repeat bg-cover"> 
             { deleteModal && 
                 <div className="w-screen h-screen fixed bg-gray-600 bg-opacity-80 flex items-center justify-center">
                     <div className="w-80 bg-white rounded shadow-lg mx-5 mb-10 p-3 ">
@@ -331,7 +317,7 @@ const MonthBreakDown = ({ db }) => {
                     <div className="flex-col">
                         <h2 className="w-80 text-white text-xl font-bold mt-2">Purchases</h2>
                         <div className="w-80 bg-white rounded shadow-lg mb-10 p-1">
-                            <table className="w-full table-fixed">
+                            <table className="w-full">
                                 <thead>
                                     <tr>
                                         <th>Amount</th>
@@ -344,7 +330,7 @@ const MonthBreakDown = ({ db }) => {
                                         return (
                                             <>
                                                 <tr className="border-t" key={index}>
-                                                    <td className="flex justify-center">${data.purchase.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}</td>
+                                                    <td>${data.purchase.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}</td>
                                                     <td>{data.date}</td>
                                                     <td>{data.category}</td>
                                                     <td className="flex justify-center">
